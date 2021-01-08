@@ -1,0 +1,61 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Launch {
+  id: ID!
+  isBooked: String!
+  mission: Mission!
+  rocket: Rocket!
+  site: String!
+}
+
+type LaunchConnect {
+  cursor: String!
+  hasMore: String!
+  launches: [Launch!]!
+}
+
+type Mission {
+  missionPatch(size: PatchSize!): String!
+  name: String!
+}
+
+type Mutation {
+  bookTrips(launchIds: [Int!]!): TripUpdateResponse!
+  cancelTrip(launchId: Int!): TripUpdateResponse!
+  create(email: String!, password: String!): User!
+  login(email: String!, password: String!): User!
+}
+
+"""The supported colors."""
+enum PatchSize {
+  GRAND
+  SMALL
+}
+
+type Query {
+  launch(launchId: Int!): Launch!
+  launchs(after: String = "", pageSize: Int = 0): LaunchConnect!
+  me: User!
+}
+
+type Rocket {
+  id: ID!
+  name: String!
+  type: String!
+}
+
+type TripUpdateResponse {
+  launches: [Launch!]!
+  message: String!
+  success: Boolean!
+}
+
+type User {
+  email: String
+  id: Int!
+  launchs: [Launch!]!
+  token: String
+  trips: [Launch!]!
+}
