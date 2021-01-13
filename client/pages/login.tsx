@@ -13,7 +13,7 @@ import rocketAnimation from "../assets/animation/8345-rocket-launcher.json";
 import useTheme from "@material-ui/core/styles/useTheme";
 import { useRouter } from "next/dist/client/router";
 
-export default function Home() {
+export default function Login() {
   const { View } = useLottie(
     {
       animationData: rocketAnimation,

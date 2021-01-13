@@ -9,6 +9,7 @@ export function Bar() {
         height: 10px;
         width: 100%;
       `}
+      position="relative"
     ></AppBar>
   );
 }

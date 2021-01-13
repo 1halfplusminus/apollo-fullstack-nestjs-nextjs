@@ -5,6 +5,7 @@ import Cart from "@material-ui/icons/AddShoppingCartOutlined";
 import User from "@material-ui/icons/VerifiedUserOutlined";
 import { css } from "@emotion/react";
 import Home from "@material-ui/icons/HomeOutlined";
+import Link from "next/link";
 
 const icon = css`
   font-size: 60px !important;
@@ -18,10 +19,10 @@ const actionButton = css`
 export default function Footer() {
   return (
     <BottomNavigation
-      onChange={(event, newValue) => {}}
+      onChange={() => {}}
       showLabels
       css={css`
-        position: absolute;
+        position: fixed;
         bottom: 0px;
         left: 0px;
         width: 100%;
@@ -31,17 +32,29 @@ export default function Footer() {
       <BottomNavigationAction
         css={actionButton}
         label="Home"
-        icon={<Home css={icon} />}
+        icon={
+          <Link href="/">
+            <Home css={icon} />
+          </Link>
+        }
       />
       <BottomNavigationAction
         css={actionButton}
         label="Cart"
-        icon={<Cart css={icon} />}
+        icon={
+          <Link href="/cart">
+            <Cart css={icon} />
+          </Link>
+        }
       />
       <BottomNavigationAction
         css={actionButton}
         label="PROFILE"
-        icon={<User css={icon} />}
+        icon={
+          <Link href="/profile">
+            <User css={icon} />
+          </Link>
+        }
       />
     </BottomNavigation>
   );
