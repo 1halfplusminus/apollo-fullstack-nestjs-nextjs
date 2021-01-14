@@ -33,8 +33,8 @@ export class LaunchsService {
       site: launch.launch_site && launch.launch_site.site_name,
       mission: {
         name: launch.mission_name,
-        missionPatchSmall: launch.links.mission_patch_small,
-        missionPatchLarge: launch.links.mission_patch,
+        missionPatchSmall: launch.links.mission_patch_small ?? '',
+        missionPatchLarge: launch.links.mission_patch ?? '',
       },
       rocket: {
         id: launch.rocket.rocket_id,

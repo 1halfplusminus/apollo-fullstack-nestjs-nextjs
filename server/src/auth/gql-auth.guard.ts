@@ -8,4 +8,8 @@ export class GqlAuthGuard extends AuthGuard('jwt') {
     const ctx = GqlExecutionContext.create(context);
     return ctx.getContext().req;
   }
+  canActivate(context) {
+    const result = super.canActivate(context);
+    return result;
+  }
 }

@@ -9,7 +9,13 @@ export class MissionsResolver {
 
   @ResolveField((returns) => String)
   async missionPatch(
-    @Args({ type: () => PatchSize, name: 'size' }) size: PatchSize,
+    @Args({
+      type: () => PatchSize,
+      name: 'size',
+      nullable: true,
+      defaultValue: PatchSize.SMALL,
+    })
+    size: PatchSize,
     @Parent() mission: Mission,
   ) {
     return size === PatchSize.SMALL

@@ -16,7 +16,7 @@ export class LaunchConnect {
   @Field((type) => String)
   cursor: string;
 
-  @Field((type) => String)
+  @Field((type) => Boolean)
   hasMore: boolean;
 
   @Field((type) => [Launch])

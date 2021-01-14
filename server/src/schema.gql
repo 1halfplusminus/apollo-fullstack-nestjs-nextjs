@@ -12,18 +12,18 @@ type Launch {
 
 type LaunchConnect {
   cursor: String!
-  hasMore: String!
+  hasMore: Boolean!
   launches: [Launch!]!
 }
 
 type Mission {
-  missionPatch(size: PatchSize!): String!
+  missionPatch(size: PatchSize = SMALL): String!
   name: String!
 }
 
 type Mutation {
-  bookTrips(launchIds: [Int!]!): TripUpdateResponse!
-  cancelTrip(launchId: Int!): TripUpdateResponse!
+  bookTrips(launchIds: [ID!]!): TripUpdateResponse!
+  cancelTrip(launchId: ID!): TripUpdateResponse!
   create(email: String!, password: String!): User!
   login(email: String!, password: String!): User!
 }
@@ -35,8 +35,8 @@ enum PatchSize {
 }
 
 type Query {
-  launch(launchId: Int!): Launch!
-  launchs(after: String = "", pageSize: Int = 0): LaunchConnect!
+  launch(launchId: ID!): Launch!
+  launches(after: String = "", pageSize: Int = 0): LaunchConnect!
   me: User!
 }
 

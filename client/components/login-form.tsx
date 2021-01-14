@@ -1,6 +1,6 @@
 import { css, jsx } from "@emotion/react";
 import React, { PropsWithChildren } from "react";
-import { Formik } from "formik";
+import { Formik, FormikHelpers } from "formik";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
@@ -10,7 +10,16 @@ import createStyles from "@material-ui/core/styles/createStyles";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 
 export interface LoginFormProps {
-  onLogin: () => void;
+  onLogin: (
+    values: {
+      email: string;
+      password: string;
+    },
+    formikHelpers: FormikHelpers<{
+      email: string;
+      password: string;
+    }>
+  ) => void | Promise<any>;
 }
 
 export const LoginForm = ({ onLogin }: LoginFormProps) => (
@@ -27,10 +36,7 @@ export const LoginForm = ({ onLogin }: LoginFormProps) => (
       }
       return errors;
     }}
-    onSubmit={(values, { setSubmitting }) => {
-      setSubmitting(false);
-      onLogin();
-    }}
+    onSubmit={onLogin}
   >
     {({
       values,

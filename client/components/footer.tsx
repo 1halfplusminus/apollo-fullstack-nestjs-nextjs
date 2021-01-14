@@ -29,33 +29,27 @@ export default function Footer() {
         height: 150px !important;
       `}
     >
-      <BottomNavigationAction
-        css={actionButton}
-        label="Home"
-        icon={
-          <Link href="/">
-            <Home css={icon} />
-          </Link>
-        }
-      />
-      <BottomNavigationAction
-        css={actionButton}
-        label="Cart"
-        icon={
-          <Link href="/cart">
-            <Cart css={icon} />
-          </Link>
-        }
-      />
-      <BottomNavigationAction
-        css={actionButton}
-        label="PROFILE"
-        icon={
-          <Link href="/profile">
-            <User css={icon} />
-          </Link>
-        }
-      />
+      <Link href="/">
+        <BottomNavigationAction
+          css={actionButton}
+          label="Home"
+          icon={<Home css={icon} />}
+        />
+      </Link>
+      <Link href="/cart">
+        <BottomNavigationAction
+          css={actionButton}
+          label="Cart"
+          icon={<Cart css={icon} />}
+        />
+      </Link>
+      <Link href="/profile">
+        <BottomNavigationAction
+          css={actionButton}
+          label="PROFILE"
+          icon={<User css={icon} />}
+        />
+      </Link>
     </BottomNavigation>
   );
 }

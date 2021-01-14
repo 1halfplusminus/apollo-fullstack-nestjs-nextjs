@@ -1,7 +1,7 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { User } from '../models/user.model';
 import { UsersService } from '../users/users.service';
-import { UseGuards } from '@nestjs/common';
+import { UnauthorizedException, UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from 'src/auth/gql-auth.guard';
 import { CurrentUser } from 'src/auth/auth.decorators';
 import { AuthService } from './auth.service';
@@ -18,6 +18,11 @@ export class AuthResolver {
     password: string,
   ) {
     const user = await this.authService.validateUser(email, password);
+    if (!user) {
+      return new UnauthorizedException({
+        email: 'Mot de passe',
+      });
+    }
     const token = await this.authService.login(user);
     return { ...user, token: token.access_token };
   }

@@ -15,6 +15,7 @@ const Users = UsersModule.forRoot({ imports: [PrismaModule] });
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
+      introspection: true,
     }),
     AuthModule.forRoot({ imports: [Users] }),
     Users,

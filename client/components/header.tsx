@@ -7,9 +7,10 @@ import Typography from "@material-ui/core/Typography";
 export interface HeaderProps {
   image: string;
   title: string;
+  subTitle?: string;
 }
 
-export const Header = ({ image, title }: HeaderProps) => {
+export const Header = ({ image, title, subTitle }: HeaderProps) => {
   return (
     <Grid container spacing={2} alignItems="center">
       <Grid item xs={3}>
@@ -20,7 +21,7 @@ export const Header = ({ image, title }: HeaderProps) => {
           {title}
         </Typography>
         <Typography css={headerSubTitle} variant="h5">
-          test@mail.com
+          {subTitle}
         </Typography>
       </Grid>
     </Grid>

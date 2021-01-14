@@ -13,15 +13,21 @@ import {
   Int,
   ResolveField,
   Parent,
+  Context,
+  ID,
 } from '@nestjs/graphql';
 import { User } from '@prisma/client';
-import { CurrentUser } from 'src/auth/auth.decorators';
-import { GqlAuthGuard } from 'src/auth/gql-auth.guard';
-import { Launch, LaunchArgs, LaunchConnect } from 'src/models/launch.model';
-import { TripUpdateResponse } from 'src/models/trip-update-response';
-import { UsersService } from 'src/users/users.service';
-import { paginateResults } from 'src/utils';
+import { AuthUser, CurrentUser } from '../auth/auth.decorators';
+import { GqlAuthGuard } from '../auth/gql-auth.guard';
+import { Launch, LaunchArgs, LaunchConnect } from '../models/launch.model';
+import { TripUpdateResponse } from '../models/trip-update-response';
+import { UsersService } from '../users/users.service';
+import { paginateResults } from '../utils';
 import { LaunchsService } from './launchs.service';
+
+interface LaunchsResolverContext {
+  user?: User;
+}
 
 @Resolver((of) => Launch)
 export class LaunchsResolver {
@@ -31,13 +37,12 @@ export class LaunchsResolver {
   ) {}
 
   @Query((returns) => LaunchConnect)
-  @UseInterceptors(CacheInterceptor)
-  @CacheKey('launchs')
-  @CacheTTL(20)
-  @UseGuards(GqlAuthGuard)
-  async launchs(
+  async launches(
     @Args() { after, pageSize }: LaunchArgs,
+    @Context() context: LaunchsResolverContext,
+    @AuthUser() user: User,
   ): Promise<LaunchConnect> {
+    context.user = user;
     const allLaunches = await this.launchService.getAllLaunches();
     const launches = paginateResults({
       after,
@@ -55,20 +60,21 @@ export class LaunchsResolver {
     };
   }
   @Query((returns) => Launch)
-  @UseInterceptors(CacheInterceptor)
   @CacheKey('launch')
   @CacheTTL(20)
-  @UseGuards(GqlAuthGuard)
   async launch(
-    @Args({ name: 'launchId', type: () => Int })
+    @Args({ name: 'launchId', type: () => ID })
     launchId: number,
+    @Context() context: LaunchsResolverContext,
+    @AuthUser() user: User,
   ) {
+    context.user = user;
     return this.launchService.getLaunchById({ launchId });
   }
   @Mutation((returns) => TripUpdateResponse)
   @UseGuards(GqlAuthGuard)
   async bookTrips(
-    @Args({ name: 'launchIds', type: () => [Int] })
+    @Args({ name: 'launchIds', type: () => [ID] })
     launchIds: number[],
     @CurrentUser() user: User,
   ) {
@@ -94,7 +100,7 @@ export class LaunchsResolver {
   @Mutation((returns) => TripUpdateResponse)
   @UseGuards(GqlAuthGuard)
   async cancelTrip(
-    @Args({ name: 'launchId', type: () => Int })
+    @Args({ name: 'launchId', type: () => ID })
     launchId: number,
     @CurrentUser() user: User,
   ) {
@@ -116,7 +122,10 @@ export class LaunchsResolver {
     };
   }
   @ResolveField((returns) => [Boolean])
-  async isBooked(@CurrentUser() user: User, @Parent() launch: Launch) {
+  async isBooked(
+    @Parent() launch: Launch,
+    @Context() { user }: LaunchsResolverContext,
+  ) {
     if (!user) return false;
     const isBooked = await this.userService.isBookedOnLaunch({
       userId: user.id,

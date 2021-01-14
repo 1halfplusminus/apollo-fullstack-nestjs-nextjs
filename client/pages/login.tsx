@@ -12,6 +12,12 @@ import { useLottie } from "lottie-react";
 import rocketAnimation from "../assets/animation/8345-rocket-launcher.json";
 import useTheme from "@material-ui/core/styles/useTheme";
 import { useRouter } from "next/dist/client/router";
+import { useMutation } from "@apollo/client";
+import {
+  Login as LoginMutation,
+  LoginVariables,
+} from "../queries/__generated__/Login";
+import { LOGIN_MUTATION } from "../queries/LOGIN_MUTATION";
 
 export default function Login() {
   const { View } = useLottie(
@@ -22,6 +28,16 @@ export default function Login() {
   );
   const theme = useTheme();
   const router = useRouter();
+  const [login, { error, loading, data }] = useMutation<
+    LoginMutation,
+    LoginVariables
+  >(LOGIN_MUTATION, {
+    context: {
+      headers: {
+        "X-LOGIN": "application/json",
+      },
+    },
+  });
   return (
     <Container container direction="row" alignContent="flex-start">
       <Head>
@@ -61,8 +77,21 @@ export default function Login() {
       <Grid item xs={8} md={5} lg={3}>
         <FormPaper>
           <LoginForm
-            onLogin={() => {
-              router.push("/");
+            onLogin={async (
+              { email, password },
+              { setFieldError, setSubmitting }
+            ) => {
+              try {
+                const result = await login({ variables: { email, password } });
+                setSubmitting(false);
+                router.push("/");
+              } catch (e) {
+                setFieldError(
+                  "password",
+                  "Votre nom d'utilisateur ou votre mot de passe est invalide"
+                );
+              }
+              setSubmitting(false);
             }}
           />
         </FormPaper>

@@ -3,17 +3,18 @@ import { css } from "@emotion/react";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import { getBackgroundImage } from "./launch-tile";
 
 export interface LaunchDetailProps {
   title: string;
   subTitle: string;
-  image: string;
+  id: string;
 }
-export const LaunchDetail = ({ title, subTitle, image }: LaunchDetailProps) => {
+export const LaunchDetail = ({ title, subTitle, id }: LaunchDetailProps) => {
   return (
     <Card
       css={css`
-        background-image: url("${image}");
+        background-image: ${getBackgroundImage(id)};
         background-size: cover;
         border-radius: 5px;
         flex: 0.7;
