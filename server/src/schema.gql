@@ -4,7 +4,7 @@
 
 type Launch {
   id: ID!
-  isBooked: String!
+  isBooked: Boolean!
   mission: Mission!
   rocket: Rocket!
   site: String!
@@ -54,8 +54,7 @@ type TripUpdateResponse {
 
 type User {
   email: String
-  id: Int!
-  launchs: [Launch!]!
+  id: ID!
   token: String
   trips: [Launch!]!
 }

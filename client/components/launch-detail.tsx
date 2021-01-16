@@ -22,7 +22,10 @@ export const LaunchDetail = ({ title, subTitle, id }: LaunchDetailProps) => {
     >
       <CardContent
         css={css`
-          min-height: 320px;
+          min-height: 280px;
+          @media (min-height: 570px) {
+            min-height: 320px;
+          }
           padding: 20px !important;
         `}
       >

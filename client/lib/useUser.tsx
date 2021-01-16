@@ -1,17 +1,21 @@
 import { gql, useQuery } from "@apollo/client";
 import Router from "next/router";
 import { useEffect } from "react";
+import { LAUNCH_TILE_DATA } from "../queries/LAUNCH_TILE_DATA";
 import { Me } from "./__generated__/Me";
 
 export const QUERY_ME = gql`
   query Me {
     me {
+      __typename
+      id
       email
       trips {
-        id
+        ...LaunchTile
       }
     }
   }
+  ${LAUNCH_TILE_DATA}
 `;
 export const useUser = ({
   redirectTo = false,

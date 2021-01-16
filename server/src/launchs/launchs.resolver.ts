@@ -2,6 +2,8 @@ import {
   CacheInterceptor,
   CacheKey,
   CacheTTL,
+  ParseArrayPipe,
+  ParseIntPipe,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -25,7 +27,7 @@ import { UsersService } from '../users/users.service';
 import { paginateResults } from '../utils';
 import { LaunchsService } from './launchs.service';
 
-interface LaunchsResolverContext {
+export interface LaunchsResolverContext {
   user?: User;
 }
 
@@ -74,10 +76,12 @@ export class LaunchsResolver {
   @Mutation((returns) => TripUpdateResponse)
   @UseGuards(GqlAuthGuard)
   async bookTrips(
-    @Args({ name: 'launchIds', type: () => [ID] })
+    @Args({ name: 'launchIds', type: () => [ID!]! })
     launchIds: number[],
     @CurrentUser() user: User,
+    @Context() context: LaunchsResolverContext,
   ) {
+    context.user = user;
     const results = await this.userService.bookTrips({
       launchIds,
       userId: user.id,
@@ -100,10 +104,12 @@ export class LaunchsResolver {
   @Mutation((returns) => TripUpdateResponse)
   @UseGuards(GqlAuthGuard)
   async cancelTrip(
-    @Args({ name: 'launchId', type: () => ID })
+    @Args({ name: 'launchId', type: () => ID! }, ParseIntPipe)
     launchId: number,
     @CurrentUser() user: User,
+    @Context() context: LaunchsResolverContext,
   ) {
+    context.user = user;
     const result = await this.userService.cancelTrip({
       launchId,
       userId: user.id,

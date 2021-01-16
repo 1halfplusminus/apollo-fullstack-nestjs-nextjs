@@ -17,7 +17,7 @@ import {
   Login as LoginMutation,
   LoginVariables,
 } from "../queries/__generated__/Login";
-import { LOGIN_MUTATION } from "../queries/LOGIN_MUTATION";
+import { MUTATION_LOGIN } from "../queries/MUTATION_LOGIN";
 
 export default function Login() {
   const { View } = useLottie(
@@ -31,7 +31,7 @@ export default function Login() {
   const [login, { error, loading, data }] = useMutation<
     LoginMutation,
     LoginVariables
-  >(LOGIN_MUTATION, {
+  >(MUTATION_LOGIN, {
     context: {
       headers: {
         "X-LOGIN": "application/json",

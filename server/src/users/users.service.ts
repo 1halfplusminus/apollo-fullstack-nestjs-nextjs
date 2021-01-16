@@ -30,7 +30,7 @@ export class UsersService {
   }) {
     const results: Trip[] = [];
     for (const launchId of launchIds) {
-      const res = await this.bookTrip({ launchId, userId });
+      const res = await this.bookTrip({ launchId: Number(launchId), userId });
       results.push(res);
     }
     return results;
@@ -49,6 +49,7 @@ export class UsersService {
         where: { unique_trip: { launchId, userId } },
       }));
     } catch (e) {
+      console.log(e);
       return false;
     }
   }

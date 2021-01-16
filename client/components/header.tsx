@@ -14,7 +14,12 @@ export const Header = ({ image, title, subTitle }: HeaderProps) => {
   return (
     <Grid container spacing={2} alignItems="center">
       <Grid item xs={3}>
-        <Image css={headerImage} src={image} height={133} width={133} />
+        <Image
+          css={headerImage}
+          src={image ?? "/rocket.png"}
+          height={133}
+          width={133}
+        />
       </Grid>
       <Grid item xs={9}>
         <Typography css={headerTitle} variant="h2">

@@ -6,7 +6,7 @@
     "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next start -p 3001",
-    "codegen": "apollo client:codegen --target typescript"
+    "codegen": "apollo client:codegen --target typescript --watch"
   },
   "dependencies": {
     "@apollo/client": "^3.3.6",

@@ -15,6 +15,7 @@ import { initializeApollo } from "../apollo/client";
 import { QUERY_LAUNCHS } from "../queries/LAUNCH_TILE_DATA";
 import { css } from "@emotion/react";
 import { Loading } from "../components/loading";
+import { LaunchList } from "../components/launch-list";
 
 export default function Home() {
   const router = useRouter();
@@ -39,17 +40,7 @@ export default function Home() {
       }
       loading={loading}
     >
-      <Grid
-        css={css`
-          margin-bottom: 150px !important;
-        `}
-        item
-        container
-        xs={12}
-        justify="center"
-        wrap="wrap"
-        spacing={2}
-      >
+      <LaunchList>
         {data?.launches.launches.map((l) => (
           <Grid item xs={10} key={l.id}>
             <LaunchTile
@@ -80,7 +71,7 @@ export default function Home() {
             )}
           </Grid>
         )}
-      </Grid>
+      </LaunchList>
     </Layout>
   );
 }

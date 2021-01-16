@@ -13,13 +13,19 @@ import {
   QueryLaunchVariables,
 } from "../../queries/__generated__/QueryLaunch";
 import { QUERY_LAUNCH, QUERY_LAUNCHS } from "../../queries/QUERY_LAUNCH";
+import { DeleteFromCart } from "../../containers/delete-from-cart";
+import { CancelTrip } from "../../containers/cancel-trip";
+import { useUser } from "../../lib/useUser";
 
 export default function Launch({ id }: { id: string }) {
-  const { data } = useQuery<QueryLaunch, QueryLaunchVariables>(QUERY_LAUNCH, {
-    variables: { id },
-    fetchPolicy: "cache-first",
-  });
-
+  const {} = useUser({ redirectTo: "/login" });
+  const { data, loading } = useQuery<QueryLaunch, QueryLaunchVariables>(
+    QUERY_LAUNCH,
+    {
+      variables: { id },
+      fetchPolicy: "cache-only",
+    }
+  );
   return (
     <Layout
       title="Space Explorer"
@@ -39,7 +45,21 @@ export default function Launch({ id }: { id: string }) {
           />
         </Grid>
         <Grid item>
-          <AddToCart />
+          {!loading && (
+            <>
+              {data?.launch.isBooked ? (
+                <CancelTrip id={id} />
+              ) : (
+                <>
+                  {data?.carts.inCart ? (
+                    <DeleteFromCart id={id} />
+                  ) : (
+                    <AddToCart id={id} />
+                  )}
+                </>
+              )}
+            </>
+          )}
         </Grid>
       </Grid>
     </Layout>

@@ -1,9 +1,9 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import { Launch } from './launch.model';
 
 @ObjectType()
 export class User {
-  @Field((type) => Int)
+  @Field((type) => ID!)
   id: number;
 
   @Field({ nullable: true })
@@ -11,7 +11,4 @@ export class User {
 
   @Field({ nullable: true })
   token?: string;
-
-  @Field((type) => [Launch])
-  launchs: Launch[];
 }

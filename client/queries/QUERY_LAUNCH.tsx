@@ -10,6 +10,10 @@ export const QUERY_LAUNCH = gql`
       }
       ...LaunchTile
     }
+    carts @client {
+      ids
+      inCart
+    }
   }
   ${LAUNCH_TILE_DATA}
 `;

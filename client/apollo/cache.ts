@@ -1,11 +1,23 @@
-import { InMemoryCache, Reference } from "@apollo/client";
+import { InMemoryCache, makeVar, Reference } from "@apollo/client";
+import { indexOf, take } from "lodash";
+import first from "lodash/first";
 import uniqBy from "lodash/uniqBy";
+
+export var cartsVar = makeVar<string[]>([]);
 
 export const createCache = () =>
   new InMemoryCache({
     typePolicies: {
       Query: {
         fields: {
+          carts: {
+            read: (__, { variables: { id } }) => {
+              return {
+                ids: cartsVar(),
+                inCart: indexOf(cartsVar(), id) !== -1,
+              };
+            },
+          },
           launches: {
             keyArgs: false,
             merge(existing, incoming) {

@@ -25,13 +25,13 @@ export class LaunchConnect {
 
 @ObjectType()
 export class Launch {
-  @Field((type) => ID)
+  @Field((type) => ID!)
   id: string | number;
 
   @Field((type) => String)
   site: string;
 
-  @Field((type) => String)
+  @Field((type) => Boolean)
   isBooked: boolean;
 
   @Field((type) => Rocket)

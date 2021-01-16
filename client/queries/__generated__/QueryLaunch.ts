@@ -29,8 +29,15 @@ export interface QueryLaunch_launch {
   mission: QueryLaunch_launch_mission;
 }
 
+export interface QueryLaunch_carts {
+  __typename: "Carts";
+  ids: string[];
+  inCart: boolean;
+}
+
 export interface QueryLaunch {
   launch: QueryLaunch_launch;
+  carts: QueryLaunch_carts;
 }
 
 export interface QueryLaunchVariables {

@@ -1,4 +1,9 @@
-import { ApolloClient, HttpLink, NormalizedCacheObject } from "@apollo/client";
+import {
+  ApolloClient,
+  gql,
+  HttpLink,
+  NormalizedCacheObject,
+} from "@apollo/client";
 import merge from "deepmerge";
 import { useMemo } from "react";
 import { createCache } from "./cache";
@@ -21,12 +26,21 @@ function createLink({ token }: CreateLinkOptions) {
     },
   });
 }
-
+const typeDefs = gql`
+  extend type Query {
+    carts: Carts!
+  }
+  type Carts {
+    ids: [ID!]!
+    inCart: Boolean!
+  }
+`;
 function createApolloClient(options: CreateLinkOptions) {
   return new ApolloClient({
     link: createLink(options),
     cache: createCache(),
     ssrMode: typeof window === "undefined",
+    typeDefs,
   });
 }
 

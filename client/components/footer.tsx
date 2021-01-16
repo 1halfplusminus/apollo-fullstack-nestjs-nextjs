@@ -6,6 +6,7 @@ import User from "@material-ui/icons/VerifiedUserOutlined";
 import { css } from "@emotion/react";
 import Home from "@material-ui/icons/HomeOutlined";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const icon = css`
   font-size: 60px !important;
@@ -17,9 +18,12 @@ const actionButton = css`
   }
 `;
 export default function Footer() {
+  const router = useRouter();
   return (
     <BottomNavigation
-      onChange={() => {}}
+      onChange={(e, newValue) => {
+        router.push(newValue);
+      }}
       showLabels
       css={css`
         position: fixed;
@@ -29,27 +33,24 @@ export default function Footer() {
         height: 150px !important;
       `}
     >
-      <Link href="/">
-        <BottomNavigationAction
-          css={actionButton}
-          label="Home"
-          icon={<Home css={icon} />}
-        />
-      </Link>
-      <Link href="/cart">
-        <BottomNavigationAction
-          css={actionButton}
-          label="Cart"
-          icon={<Cart css={icon} />}
-        />
-      </Link>
-      <Link href="/profile">
-        <BottomNavigationAction
-          css={actionButton}
-          label="PROFILE"
-          icon={<User css={icon} />}
-        />
-      </Link>
+      <BottomNavigationAction
+        value="/"
+        css={actionButton}
+        label="Home"
+        icon={<Home css={icon} />}
+      />
+      <BottomNavigationAction
+        value="/cart"
+        css={actionButton}
+        label="Cart"
+        icon={<Cart css={icon} />}
+      />
+      <BottomNavigationAction
+        value="/profile"
+        css={actionButton}
+        label="PROFILE"
+        icon={<User css={icon} />}
+      />
     </BottomNavigation>
   );
 }
