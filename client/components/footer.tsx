@@ -3,9 +3,9 @@ import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import Cart from "@material-ui/icons/AddShoppingCartOutlined";
 import User from "@material-ui/icons/VerifiedUserOutlined";
+import LogOut from "@material-ui/icons/ExitToApp";
 import { css } from "@emotion/react";
 import Home from "@material-ui/icons/HomeOutlined";
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 const icon = css`
@@ -31,6 +31,7 @@ export default function Footer() {
         left: 0px;
         width: 100%;
         height: 150px !important;
+        text-transform: uppercase;
       `}
     >
       <BottomNavigationAction
@@ -48,8 +49,14 @@ export default function Footer() {
       <BottomNavigationAction
         value="/profile"
         css={actionButton}
-        label="PROFILE"
+        label="Profile"
         icon={<User css={icon} />}
+      />
+      <BottomNavigationAction
+        value="/logout"
+        css={actionButton}
+        label="Logout"
+        icon={<LogOut css={icon} />}
       />
     </BottomNavigation>
   );

@@ -8,7 +8,7 @@ import background from "../assets/images/background.jpg";
 import Logo from "../components/logo";
 import LoginForm, { FormPaper } from "../components/login-form";
 import { Typography } from "@material-ui/core";
-import { useLottie } from "lottie-react";
+import Lottie, { useLottie } from "lottie-react";
 import rocketAnimation from "../assets/animation/8345-rocket-launcher.json";
 import useTheme from "@material-ui/core/styles/useTheme";
 import { useRouter } from "next/dist/client/router";
@@ -19,13 +19,19 @@ import {
 } from "../queries/__generated__/Login";
 import { MUTATION_LOGIN } from "../queries/MUTATION_LOGIN";
 
-export default function Login() {
-  const { View } = useLottie(
-    {
-      animationData: rocketAnimation,
-    },
-    { height: "100%", width: "100%" }
+const RocketAnimation = () => {
+  return (
+    <Lottie
+      animationData={rocketAnimation}
+      css={css`
+        max-height: 250px;
+        height: 100%;
+        height: 100%;
+      `}
+    />
   );
+};
+export default function Login() {
   const theme = useTheme();
   const router = useRouter();
   const [login, { error, loading, data }] = useMutation<
@@ -59,7 +65,7 @@ export default function Login() {
       </Grid>
       <Grid container item xs={12} justify="center">
         <Grid item xs={4} md={3} lg={2} xl={2}>
-          {View}
+          <RocketAnimation />
         </Grid>
       </Grid>
       <Grid item xs={12}>
